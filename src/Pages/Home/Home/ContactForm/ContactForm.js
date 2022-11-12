@@ -25,11 +25,11 @@ const ContactForm = () => {
                     <h3 className='text-3xl text-white text-semibold'>Stay connected with us</h3>
                </div>
             <form onSubmit={handleSubmit}>
-            <input type="email" placeholder="Email Address" name='email' className="input w-full max-w-xs " />
+            <input type="email" placeholder="Email Address" name='email' className="input w-full  " />
              <br />
-            <input type="text" placeholder="Subject"  name='subject' className="input w-full max-w-xs my-6" />
+            <input type="text" placeholder="Subject"  name='subject' className="input w-full  my-6" />
              <br />
-             <textarea className="textarea textarea-info w-full max-w-xs" name='message' placeholder="message"></textarea>
+             <textarea className="textarea textarea-info w-full " name='message' placeholder="message"></textarea>
               <br />
               <input type="submit" className='btn btn-primary text-white bg-gradient-to-r from-primary to-secondary mt-4'  value="Submit" />
             </form>
