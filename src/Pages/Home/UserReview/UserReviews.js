@@ -38,7 +38,7 @@ const UserReviews = () => {
                        <h3 className='text-xl text-[#19D3AE] font-bold'>Testimonial</h3>
                        <h2 className='text-3xl font-semibold mt-6'>What Our Patients Says</h2>
                      </div>
-                     <img src={icon}  style={{width:'150px'}} alt="" />
+                     <img src={icon}  className="w-32 lg:w-38" alt="" />
                 </div>
 
                   <div className='my-20 gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '>
