@@ -1,5 +1,7 @@
 import React from 'react';
-import img from '../../../Assets/images/people1.png'
+import people1 from '../../../Assets/images/people1.png'
+import people2 from '../../../Assets/images/people2.png'
+import people3 from '../../../Assets/images/people3.png'
 import UserReview from './UserReview';
 import icon from '../../../Assets/icons/quote.svg'
 
@@ -7,21 +9,21 @@ const UserReviews = () => {
     const Reviews=[
         {
             id:1,
-            img:img,
+            img:people1,
             name:"Winson Herry",
             location:"California",
             description: "It is a long established fact that by the readable content of a lot layout. The point of using Lorem a more-or-less normal distribu to using Content here, content" ,
         },
         {
             id:2,
-            img:img,
+            img:people2,
             name:"Winson Herry",
             location:"California",
             description: "It is a long established fact that by the readable content of a lot layout. The point of using Lorem a more-or-less normal distribu to using Content here, content" ,
         },
         {
             id:3,
-            img:img,
+            img:people3,
             name:"Winson Herry",
             location:"California",
             description: "It is a long established fact that by the readable content of a lot layout. The point of using Lorem a more-or-less normal distribu to using Content here, content" ,
