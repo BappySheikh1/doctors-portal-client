@@ -2,6 +2,8 @@ import React from 'react';
 import Banner from '../Banner/Banner';
 import InfoCard from '../InfoCard/InfoCard';
 import MakeApponment from '../MakeAppoinment/MakeAppointment';
+import UserReviews from '../UserReview/UserReviews';
+import ContactForm from './ContactForm/ContactForm';
 import ServiceCard from './ServiceCard/ServiceCard';
 
 const Home = () => {
@@ -17,6 +19,8 @@ const Home = () => {
                 <ServiceCard />
             </div>
            <MakeApponment />
+           <UserReviews />
+           <ContactForm />
         </div>
     );
 };

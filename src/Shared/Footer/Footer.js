@@ -25,9 +25,6 @@ const Footer = () => {
 
 </footer>
  
-<div>
-  <p className='text-center my-4'>Copyright 2022 All Rights Reserved</p>
-  </div>
         </div>
     );
 };
