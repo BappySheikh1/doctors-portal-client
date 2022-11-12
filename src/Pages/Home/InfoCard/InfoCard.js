@@ -6,18 +6,18 @@ import call from '../../../Assets/icons/phone.svg'
 
 const InfoCard = () => {
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-6 mt-10 '>
-            <div className='w-[400px] h-[190px] bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center mx-auto'>
+        <div className='grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-5  mt-10 '>
+            <div className='w-[400px] h-[190px] bg-gradient-to-r from-primary to-secondary  rounded-lg flex items-center mx-auto'>
                 <div className='px-8'>
                     <img src={watch} alt="" />
                 </div>
                 <div className='py-52  '>
                    <h4 className='text-1xl font-bold text-white'>Opening Hours</h4>
-                   <p className='text-gray-100'>Lorem Ipsum is simply dummy text of the pri</p>
+                   <p className='text-gray-100 px-2'>Open 9.00 am to 5.00pm everyday</p>
                 </div>
             </div>
 
-            <div className='w-[400px] h-[190px] bg-[#3A4256] rounded-lg flex items-center mx-auto'>
+            <div className='w-[400px] h-[190px] bg-[#3A4256] rounded-lg flex items-center  mx-auto'>
               <div className='px-8'>
                   <img src={location} alt="" />
               </div>

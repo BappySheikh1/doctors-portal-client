@@ -5,7 +5,7 @@ import image from '../../../Assets/images/chair.png';
 
 const Banner = () => {
     return (
-        <div  className="hero bg-base-300 h-[838px] Chair-background">
+        <div  className="hero bg-base-300 h-[838px] Chair-background rounded-md">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <img src={image} alt='' className="w-1/2 rounded-lg shadow-2xl" />
           <div>

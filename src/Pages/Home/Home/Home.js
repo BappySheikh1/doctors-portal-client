@@ -15,6 +15,7 @@ const Home = () => {
                 <h2 className='text-5xl font-semibold mb-20'>Services We Provide</h2>
                 <ServiceCard />
             </div>
+            
         </div>
     );
 };
