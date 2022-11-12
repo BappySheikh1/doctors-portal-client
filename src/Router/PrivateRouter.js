@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-const PrivateRouter = () => {
+const PrivateRouter = ({children}) => {
+    const {}=useContext()
+    
     return (
         <div>
             
