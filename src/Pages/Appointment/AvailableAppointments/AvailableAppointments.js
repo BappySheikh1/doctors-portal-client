@@ -5,7 +5,7 @@ import AppointmentOption from './AppointmentOption';
 
 const AvailableAppointments = ({selectedDate}) => {
     const [AppointmentOptions,setAppoinmentOptions]=useState([])
-    const [treatment,setTreatment]=useState({})
+    const [treatment,setTreatment]=useState(null)
     useEffect(()=>{
         fetch('appointmentOptions.json')
         .then(res => res.json())
@@ -19,15 +19,16 @@ const AvailableAppointments = ({selectedDate}) => {
                     AppointmentOptions.map(option => <AppointmentOption 
                         key={option._id}
                         AppointmentOption={option}
-                         setTreatment={setTreatment}                        
+                         setTreatment={setTreatment}                       
                         />)
                   }
                </div>
                {
                 treatment && 
                 <BookingModal
-
                   treatment={treatment}
+                  selectedDate={selectedDate}
+
                 ></BookingModal>
                }
         </section>
