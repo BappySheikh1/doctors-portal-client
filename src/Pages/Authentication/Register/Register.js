@@ -1,8 +1,11 @@
-import React from 'react';
+import { Result } from 'postcss';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import login from '../../../Assets/images/login.png'
-
+import { AuthContext } from '../../../Contexts/AuthProvider';
+ 
 const Register = () => {
+  const {createUser,updateDisplayUser}=useContext(AuthContext)
     const handleSubmitLogin=event =>{
         event.preventDefault();
         const form =event.target
@@ -10,8 +13,32 @@ const Register = () => {
         const photoURL=form.photoURL.value
         const email=form.email.value
         const password=form.password.value
-       console.log(name,photoURL,email,password);
+      //  console.log(name,photoURL,email,password);
+      createUser(email,password)
+      .then(result=>{
+        const user = result.user
+        console.log(user);
+        handleUpdateNameProfile(name,photoURL)
+      })
+      .catch(err =>{
+        console.log(err);
+      })
     }
+  
+    const handleUpdateNameProfile=(name,photoURL)=>{
+     const provider={
+      displayName: name,
+      photoURL: photoURL
+     }
+     updateDisplayUser(provider)
+     .then(()=>{
+
+     })
+     .catch((err)=>{
+      console.log(err);
+     })
+    }
+
     return (
         <div className="hero  bg-base-200">
   <div className="hero-content flex-col lg:flex-row-reverse">
@@ -62,6 +89,9 @@ const Register = () => {
           <button className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white font-bold">Register</button>
         </div>
       </form>
+      <div className='text-center mb-5'>
+        <button className='btn btn-secondary text-white font-bold'>Google Log In</button>
+      </div>
       <div className='text-center mb-6'>
         <p>Already have an account <Link to='/login' className='underline text-primary'>Log in</Link></p>
       </div>

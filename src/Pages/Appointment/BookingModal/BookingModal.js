@@ -1,19 +1,28 @@
 import { format } from 'date-fns';
 import React from 'react';
 
-const BookingModal = ({treatment,selectedDate}) => {
+const BookingModal = ({treatment,selectedDate,setTreatment}) => {
  const {name,slots}=treatment; //trearment is appointment options just defirrent
  const date =format(selectedDate,"PP")
    
  const handleSubmit=event=>{
   event.preventDefault();
   const form =event.target
-  const name =form.name.value
+  const patient =form.name.value
+  const slot =form.slot.value
   const phone =form.phone.value
   const email =form.email.value
 
-  console.log(name,phone,email);
-  form.reset()
+  const booking={
+    appointmentDate: date,
+    treatment: name,
+    patient: patient,
+    slot,
+    email,
+    phone
+  }
+  console.log(booking);
+  setTreatment(null)
  }
 
     return (
@@ -25,9 +34,12 @@ const BookingModal = ({treatment,selectedDate}) => {
                   <h3 className="text-xl font-bold text-secondary">{name}</h3>
                   <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-3 mt-10'>
                   <input type="text" defaultValue={date} disabled className="input input-bordered w-full font-bold text-center" readOnly/>
-                  <select className="select select-bordered w-full text-center font-bold">
+                  <select name='slot' className="select select-bordered w-full text-center font-bold">
                         {
-                          slots.map((slot,idx) => <option key={idx}>{slot}</option>)
+                          slots.map((slot,idx) => <option 
+                          key={idx}
+                          value={slot}
+                          >{slot}</option>)
                         }
                   </select>
                   <input type="text"  name='name' placeholder="Full Name" className="input input-bordered w-full " />

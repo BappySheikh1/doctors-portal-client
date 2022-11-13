@@ -4,12 +4,12 @@ import BookingModal from '../BookingModal/BookingModal';
 import AppointmentOption from './AppointmentOption';
 
 const AvailableAppointments = ({selectedDate}) => {
-    const [AppointmentOptions,setAppoinmentOptions]=useState([])
+    const [AppointmentOptions,setAppointmentOptions]=useState([])
     const [treatment,setTreatment]=useState(null)
     useEffect(()=>{
         fetch('appointmentOptions.json')
         .then(res => res.json())
-        .then(data => setAppoinmentOptions(data))
+        .then(data => setAppointmentOptions(data))
     },[])
     return (
         <section className='text-center my-20'>
@@ -28,7 +28,7 @@ const AvailableAppointments = ({selectedDate}) => {
                 <BookingModal
                   treatment={treatment}
                   selectedDate={selectedDate}
-
+                  setTreatment={setTreatment}
                 ></BookingModal>
                }
         </section>
