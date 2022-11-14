@@ -1,11 +1,12 @@
 import { Result } from 'postcss';
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import login from '../../../Assets/images/login.png'
 import { AuthContext } from '../../../Contexts/AuthProvider';
  
 const Register = () => {
-  const {createUser,updateDisplayUser}=useContext(AuthContext)
+  const {createUser,updateDisplayUser,socialLogIn}=useContext(AuthContext)
     const handleSubmitLogin=event =>{
         event.preventDefault();
         const form =event.target
@@ -19,7 +20,9 @@ const Register = () => {
         const user = result.user
         console.log(user);
         handleUpdateNameProfile(name,photoURL)
-      })
+        form.reset();
+        toast.success('user create successfully')
+      }) 
       .catch(err =>{
         console.log(err);
       })
@@ -39,6 +42,16 @@ const Register = () => {
      })
     }
 
+    const handleGoogleLogin=()=>{
+      socialLogIn()
+      .then(result=>{
+        const user=result.user
+        console.log(user);
+      })
+      .catch(err =>{
+        console.log(err);
+      })
+    }
     return (
         <div className="hero  bg-base-200">
   <div className="hero-content flex-col lg:flex-row-reverse">
@@ -51,7 +64,7 @@ const Register = () => {
    
     <div className="card flex-shrink-0 w-full  max-w-sm shadow-2xl bg-base-100">
       <form onSubmit={handleSubmitLogin} className="card-body">
-          <div className="text-center my-4">
+          <div className="text-center ">
               <h1 className="text-4xl text-primary font-bold">Register now!</h1>
             </div>
 
@@ -81,20 +94,19 @@ const Register = () => {
             <span className="label-text">Password</span>
           </label>
           <input type="password" name='password' placeholder="password" className="input input-bordered" />
-          <label className="label">
-            <Link  className="label-text-alt link link-hover">Forgot password?</Link>
-          </label>
         </div>
         <div className="form-control mt-6">
           <button className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white font-bold">Register</button>
         </div>
       </form>
-      <div className='text-center mb-5'>
-        <button className='btn btn-secondary text-white font-bold'>Google Log In</button>
-      </div>
-      <div className='text-center mb-6'>
+      <div className='text-center '>
         <p>Already have an account <Link to='/login' className='underline text-primary'>Log in</Link></p>
       </div>
+      <div className="divider">OR</div>
+      <div className='text-center mb-5'>
+        <button onClick={handleGoogleLogin} className='btn btn-secondary text-white font-bold'>Google Log In</button>
+      </div>
+      
     </div>
   </div>
         </div>

@@ -1,10 +1,17 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import loging from '../../../Assets/images/login.png'
+import React, { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import login_img from '../../../Assets/images/login.png'
 import { AuthContext } from '../../../Contexts/AuthProvider';
 
 const Login = () => {
-  const {userLogIn} = useContext(AuthContext)
+  const {userLogIn,socialLogIn,userResetPassword} = useContext(AuthContext)
+  const [userEmail,setUserEmail]=useState('') 
+
+  const navigate=useNavigate()
+  const location =useLocation()
+  let from = location.state?.from?.pathname || "/";
+
     const handleSubmitLogin=event =>{
         event.preventDefault();
         const form =event.target
@@ -15,31 +22,59 @@ const Login = () => {
       .then(result =>{
         const user= result.user
         console.log(user);
+        navigate(from, { replace: true });
+        form.reset();
+        toast.success("User log iN successfully")
       })
       .catch(err =>{
         console.log(err);
       })
     } 
+
+    const handleGoogleLogin=()=>{
+      socialLogIn()
+      .then(result=>{
+        const user=result.user
+        console.log(user);
+      })
+      .catch(err =>{
+        console.log(err);
+      })
+    }
+   
+    const handleOnBlur=(e)=>{
+      setUserEmail(e.target.value)
+      
+    }
+    const handleForgetPassword=()=>{
+      userResetPassword(userEmail)
+      .then(()=>{
+        toast.success('reset successful Please check your email ')
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+    }
     return (
         <div className="hero  bg-base-200">
   <div className="hero-content flex-col lg:flex-row-reverse">
 
     <div>
     <figure>
-        <img src={loging} alt="" />
+        <img src={login_img} alt="" />
     </figure>    
     </div> 
    
     <div className="card flex-shrink-0 w-full  max-w-sm shadow-2xl bg-base-100">
       <form onSubmit={handleSubmitLogin} className="card-body">
-            <div className="text-center my-8">
+            <div className="text-center">
                 <h1 className="text-5xl text-primary font-bold">Login now!</h1>
             </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input type="email" name='email' placeholder="email" className="input input-bordered" />
+          <input onBlur={handleOnBlur} type="email" name='email' placeholder="email" className="input input-bordered" />
         </div>
         <div className="form-control">
           <label className="label">
@@ -47,19 +82,21 @@ const Login = () => {
           </label>
           <input type="password" name='password' placeholder="password" className="input input-bordered" />
           <label className="label">
-            <Link  className="label-text-alt link link-hover">Forgot password?</Link>
+            <Link onClick={handleForgetPassword}  className="label-text-alt link link-hover">Forgot password?</Link>
           </label>
         </div>
         <div className="form-control mt-6">
           <button className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white font-bold">Login</button>
         </div>
       </form>
+      <div className='text-center '>
+        <p>New to doctors portal <Link to='/register' className='underline text-primary'>create account</Link></p>
+      </div>
+      <div className="divider">OR</div>
       <div className='text-center mb-5'>
-        <button className='btn btn-secondary text-white font-bold'>Google Log In</button>
+        <button onClick={handleGoogleLogin} className='btn btn-secondary text-white font-bold'>Google Log In</button>
       </div>
-      <div className='text-center mb-6'>
-        <p>You have an no account <Link to='/register' className='underline text-primary'>Please Register</Link></p>
-      </div>
+      
     </div>
   </div>
         </div>
