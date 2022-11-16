@@ -1,12 +1,13 @@
-import { Result } from 'postcss';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import login from '../../../Assets/images/login.png'
 import { AuthContext } from '../../../Contexts/AuthProvider';
  
 const Register = () => {
   const {createUser,updateDisplayUser,socialLogIn}=useContext(AuthContext)
+  const navigate = useNavigate()
+
     const handleSubmitLogin=event =>{
         event.preventDefault();
         const form =event.target
@@ -22,6 +23,7 @@ const Register = () => {
         handleUpdateNameProfile(name,photoURL)
         form.reset();
         toast.success('user create successfully')
+        navigate('/')
       }) 
       .catch(err =>{
         console.log(err);

@@ -1,8 +1,9 @@
 import { format } from 'date-fns';
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import {AuthContext} from '../../../Contexts/AuthProvider'
 
-const BookingModal = ({treatment,selectedDate,setTreatment}) => {
+const BookingModal = ({treatment,selectedDate,setTreatment,refetch}) => {
   const {user}=useContext(AuthContext)
  const {name,slots}=treatment; //trearment is appointment options just defirrent
  const date =format(selectedDate,"PP")
@@ -23,8 +24,25 @@ const BookingModal = ({treatment,selectedDate,setTreatment}) => {
     email,
     phone
   }
-  console.log(booking);
-  setTreatment(null)
+  // console.log(booking);
+  fetch('http://localhost:5000/bookings',{
+    method:"POST",
+    headers:{
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify(booking)
+  })
+  .then(res => res.json())
+  .then(data => {
+    // console.log(data);
+    if(data.acknowledged){
+      toast.success('Booking Confirmed')
+      setTreatment(null)
+      refetch()
+    }
+  })
+
+  
  }
 
     return (
@@ -44,9 +62,9 @@ const BookingModal = ({treatment,selectedDate,setTreatment}) => {
                           >{slot}</option>)
                         }
                   </select>
-                  <input type="text"  name='name' defaultValue={user?.name} placeholder="Full Name" className="input input-bordered w-full " />
+                  <input type="text"  name='name' defaultValue={user?.displayName} disabled placeholder="Full Name" className="input input-bordered w-full " />
                   <input type="text"  name='phone' placeholder="Phone Number" className="input input-bordered w-full " />
-                  <input type="email" name='email' defaultValue={user?.email} placeholder="Email" className="input input-bordered w-full " />
+                  <input type="email" name='email' defaultValue={user?.email} disabled placeholder="Email" className="input input-bordered w-full " />
                   <br />
                   <input className='w-full  btn btn-primary text-white font-bold' type="submit" value="Submit" />
                   </form>
