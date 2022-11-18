@@ -1,12 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import login from '../../../Assets/images/login.png'
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import useToken from '../../../hooks/useToken';
  
 const Register = () => {
   const {createUser,updateDisplayUser,socialLogIn}=useContext(AuthContext)
-  const navigate = useNavigate()
+  const [createUserEmail,setCreateUserEmail]=useState('') 
+
+  const [token]=useToken(createUserEmail)
+  const navigate = useNavigate();
+  if(token){
+    navigate('/')
+  }
 
     const handleSubmitLogin=event =>{
         event.preventDefault();
@@ -22,13 +29,37 @@ const Register = () => {
         console.log(user);
         handleUpdateNameProfile(name,photoURL)
         form.reset();
-        toast.success('user create successfully')
-        navigate('/')
+        toast.success('user create successfully');
+
+        const users={
+          name: name,
+          email: email
+        }
+        fetch('http://localhost:5000/users',{
+          method:"POST",
+          headers:{
+            "content-type": "application/json"
+          },
+          body: JSON.stringify(users)
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if(data.acknowledged){
+            toast.success('successfully added')
+            setCreateUserEmail(email)
+            
+          }
+        
+        })
+
       }) 
       .catch(err =>{
         console.log(err);
       })
     }
+
+   
   
     const handleUpdateNameProfile=(name,photoURL)=>{
      const provider={

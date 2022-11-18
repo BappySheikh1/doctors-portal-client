@@ -13,7 +13,7 @@ const AvailableAppointments = ({selectedDate}) => {
         queryFn:()=> fetch(`http://localhost:5000/appointmentOptions?date=${date}`)
         .then(res => res.json())
     })
-   
+    
     if(isLoading){
         return <div className='text-center my-20'><button className="btn btn-square loading"></button></div>
     }

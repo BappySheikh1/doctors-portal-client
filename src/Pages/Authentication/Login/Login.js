@@ -3,26 +3,31 @@ import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import login_img from '../../../Assets/images/login.png'
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import useToken from '../../../hooks/useToken';
 
 const Login = () => {
   const {userLogIn,socialLogIn,userResetPassword} = useContext(AuthContext)
   const [userEmail,setUserEmail]=useState('') 
-
+  const [logInUseEmail,setLogInUserEmail]=useState('')
+  const [token]=useToken(logInUseEmail)
   const navigate=useNavigate()
   const location =useLocation()
   let from = location.state?.from?.pathname || "/";
+  if(token){ 
+    navigate(from, { replace: true });
+  }
 
     const handleSubmitLogin=event =>{
         event.preventDefault();
         const form =event.target
         const email=form.email.value
         const password=form.password.value
+        setLogInUserEmail(email)
       // console.log(email,password);
       userLogIn(email,password)
       .then(result =>{
         const user= result.user
         console.log(user);
-        navigate(from, { replace: true });
         form.reset();
         toast.success("User log iN successfully")
       })
@@ -41,7 +46,7 @@ const Login = () => {
         console.log(err);
       })
     }
-   
+    
     const handleOnBlur=(e)=>{
       setUserEmail(e.target.value)
       

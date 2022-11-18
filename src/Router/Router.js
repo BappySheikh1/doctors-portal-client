@@ -6,7 +6,10 @@ import Register from "../Pages/Authentication/Register/Register"
 import About from "../Pages/About/About";
 import Appointment from "../Pages/Appointment/Appointment";
 import PrivateRouter from "./PrivateRouter";
-import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
+import DashboardLayout from "../Layout/DashboardLayout";
+import MyAppointment from "../Pages/Dashboard/MyAppoinment/MyAppointment";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import AdminRoute from "../Layout/AdminRoute";
 
 export const router = createBrowserRouter([
     {
@@ -35,8 +38,20 @@ export const router = createBrowserRouter([
             }
         ]
     },
+
     {
         path:'/dashboard',
-        element: <PrivateRouter><Dashboard /></PrivateRouter> 
+        element: <PrivateRouter><DashboardLayout /></PrivateRouter>,
+        children:[
+            {
+                path:'/dashboard',
+                element:<MyAppointment />
+            },
+            {
+                path:'/dashboard/users',
+                element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+            }
+        ]  
+        
     }
 ])
