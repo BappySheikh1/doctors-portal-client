@@ -1,8 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
 const ManageDoctors = () => {
+    const [deletingDoctor ,setDeletingDoctor]=useState(null)
+
+    const closeModal =()=>{
+        setDeletingDoctor(null)
+    }
     const {data: doctors = [],isLoading,refetch}=useQuery({
         queryKey:['doctors'],
         queryFn: async ()=>{
@@ -25,23 +31,23 @@ const ManageDoctors = () => {
         return <p>loading....</p>
     }
 
-    const handleDelete =(_id)=>{
-        console.log("delete doctor ",_id);
-        const agree =window.confirm('Are you sure to delete',_id)
-        if(agree){
-            fetch(`http://localhost:5000/doctors/${_id}`,{
+    const handleDelete =(doctor)=>{
+        
+            fetch(`http://localhost:5000/doctors/${doctor._id}`,{
                 method:'DELETE',
-                
+                headers:{
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
             })
             .then(res => res.json())
             .then(data =>{
-                console.log(data);
+                // console.log(data);
                 if(data.deletedCount > 0){
-                    toast.success('Delete successfully')
+                    toast.success(`Doctor ${doctor.name}  Deleted successfully`)
                     refetch()
                 }
             })
-        }
+        
     }
     return (
         <div>
@@ -62,7 +68,8 @@ const ManageDoctors = () => {
     <tbody>
      
       {
-        doctors.map((doctor,idx) => 
+        doctors &&
+        doctors?.map((doctor,idx) => 
 
          <tr key={doctor._id}>
             <th>{idx +1}</th>
@@ -77,9 +84,7 @@ const ManageDoctors = () => {
             <td>{doctor.email}</td>
             <td>{doctor.specialty}</td>
             <td>
-            <label htmlFor="my-modal-3" className="btn">open modal</label>
-
-                <button onClick={()=>handleDelete(doctor._id)} className='btn btn-xs bg-red-600 border-none' >Delete</button>
+            <label onClick={()=>setDeletingDoctor(doctor)} htmlFor="confirmation-modal" className="btn btn-xs bg-red-600 border-none">Delete</label>
              </td>
           </tr>)
       }
@@ -87,6 +92,16 @@ const ManageDoctors = () => {
     </tbody>
   </table>
 </div>
+{
+    deletingDoctor && <ConfirmationModal
+    title={`Are you sure you want to delete?`}
+    message={`If you delete ${deletingDoctor.name}. It cannot be undone.`}
+    successAction={handleDelete}
+    data={deletingDoctor}
+    successButtonName='Delete'
+    closeModal={closeModal}
+    />
+}
         </div>
     );
 };
