@@ -42,7 +42,8 @@ if(isLoading){
                    <tbody>
 
                    {
-                    bookings.map((book,idx) =>   <tr key={book._id}>
+                    bookings &&
+                    bookings?.map((book,idx) =>   <tr key={book._id}>
                         <th>{idx + 1}</th>
                         <td>{book.patient}</td>
                         <td>{book.treatment}</td>

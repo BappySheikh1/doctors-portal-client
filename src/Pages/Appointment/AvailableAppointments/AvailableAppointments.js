@@ -23,7 +23,7 @@ const AvailableAppointments = ({selectedDate}) => {
                <h5 className='text-2xl font-bold text-secondary'>Available Appointments on {format(selectedDate,"PP")}</h5>
                <div className='grid gap-6 grid-cols-1 md:grid-cols-2 mt-10 lg:grid-cols-3'>
                   {
-                    AppointmentOptions.map(option => <AppointmentOption 
+                    AppointmentOptions?.map(option => <AppointmentOption 
                         key={option._id}
                         AppointmentOption={option}
                          setTreatment={setTreatment}                       

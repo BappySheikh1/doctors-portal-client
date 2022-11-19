@@ -11,7 +11,7 @@ const ContactForm = () => {
         const message=form.message.value
         console.log(name,subject,message);
     }
-
+ 
     return (
         <section 
         style={{
